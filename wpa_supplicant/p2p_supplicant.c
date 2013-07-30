@@ -6221,7 +6221,6 @@ static void wpas_p2p_set_group_idle_timeout(struct wpa_supplicant *wpa_s)
 			   "during provisioning");
 		return;
 	}
-
 	if (wpa_s->show_group_started) {
 		/*
 		 * Use the normal group formation timeout between the end of

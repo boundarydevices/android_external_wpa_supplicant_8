@@ -26,6 +26,13 @@ L_CFLAGS += -DANDROID_LOG_NAME=\"hostapd\"
 
 # Disable unused parameter warnings
 L_CFLAGS += -Wno-unused-parameter
+ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
+L_CFLAGS += -DANDROID_P2P
+endif
+
+ifeq ($(BOARD_WLAN_DEVICE),$(filter $(BOARD_WLAN_DEVICE), qcwcn UNITE))
+L_CFLAGS += -DANDROID_P2P
+endif
 
 # Set Android extended P2P functionality
 L_CFLAGS += -DANDROID_P2P
@@ -908,8 +915,8 @@ LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB)
+ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB_QCOM),)
+LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB_QCOM)
 endif
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
 ifdef CONFIG_DRIVER_NL80211
@@ -920,6 +927,26 @@ LOCAL_STATIC_LIBRARIES += libnl_2
 endif
 endif
 LOCAL_CFLAGS := $(L_CFLAGS)
+LOCAL_SRC_FILES := $(OBJS)
+LOCAL_C_INCLUDES := $(INCLUDES)
+include $(BUILD_EXECUTABLE)
+
+########################
+include $(CLEAR_VARS)
+LOCAL_MODULE := rtl_hostapd
+LOCAL_MODULE_TAGS := optional
+ifdef CONFIG_DRIVER_CUSTOM
+LOCAL_STATIC_LIBRARIES := libCustomWifi
+endif
+ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB_RTL),)
+LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB_RTL)
+endif
+LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
+ifdef CONFIG_DRIVER_NL80211
+LOCAL_STATIC_LIBRARIES += libnl_2
+endif
+LOCAL_CFLAGS := $(L_CFLAGS)
+LOCAL_CFLAGS += -DREALTEK_WIFI_VENDOR
 LOCAL_SRC_FILES := $(OBJS)
 LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)

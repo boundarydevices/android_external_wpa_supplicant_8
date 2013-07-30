@@ -4823,6 +4823,12 @@ static int p2p_ctrl_set(struct wpa_supplicant *wpa_s, char *cmd)
 		return p2p_set_listen_channel(wpa_s->global->p2p, 81,
 					      atoi(param), 1);
 	}
+#ifdef REALTEK_WIFI_VENDOR
+    if (os_strcmp(cmd, "go_intent") == 0) {
+        wpa_s->conf->p2p_go_intent = atoi(param);
+        return 0;
+    }
+#endif
 
 	if (os_strcmp(cmd, "ssid_postfix") == 0) {
 		return p2p_set_ssid_postfix(wpa_s->global->p2p, (u8 *) param,
