@@ -2129,7 +2129,11 @@ static void wpa_supplicant_enable_one_network(struct wpa_supplicant *wpa_s,
 	 * Try to reassociate since there is no current configuration and a new
 	 * network was made available.
 	 */
-	if (!wpa_s->current_ssid && !wpa_s->disconnected)
+#ifdef REALTEK_WIFI_VENDOR
+	if (!wpa_s->current_ssid)
+#else
+    if (!wpa_s->current_ssid && !wpa_s->disconnected)
+#endif
 		wpa_s->reassociate = 1;
 }
 
@@ -2149,8 +2153,11 @@ void wpa_supplicant_enable_network(struct wpa_supplicant *wpa_s,
 			wpa_supplicant_enable_one_network(wpa_s, ssid);
 	} else
 		wpa_supplicant_enable_one_network(wpa_s, ssid);
-
-	if (wpa_s->reassociate && !wpa_s->disconnected) {
+#ifdef REALTEK_WIFI_VENDOR
+	if (wpa_s->reassociate) {
+#else
+    if (wpa_s->reassociate && !wpa_s->disconnected) {
+#endif
 		if (wpa_s->sched_scanning) {
 			wpa_printf(MSG_DEBUG, "Stop ongoing sched_scan to add "
 				   "new network to scan filters");

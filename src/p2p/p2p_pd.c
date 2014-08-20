@@ -20,7 +20,7 @@
  * Number of retries to attempt for provision discovery requests
  * in case the peer is not listening.
  */
-#define MAX_PROV_DISC_REQ_RETRIES 120
+#define MAX_PROV_DISC_REQ_RETRIES 10
 
 
 static void p2p_build_wps_ie_config_methods(struct wpabuf *buf,
