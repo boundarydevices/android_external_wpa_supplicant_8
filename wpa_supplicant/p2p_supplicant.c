@@ -6107,7 +6107,25 @@ void wpas_p2p_completed(struct wpa_supplicant *wpa_s)
 		os_memcpy(go_dev_addr, ssid->bssid, ETH_ALEN);
 	persistent = wpas_p2p_persistent_group(wpa_s, go_dev_addr, ssid->ssid,
 					       ssid->ssid_len);
-	os_memcpy(wpa_s->go_dev_addr, go_dev_addr, ETH_ALEN);
+    /*
+     * Sometimes it cannot get persident go_dev_addr when p2p completed
+     * but the full-zero go_dev_addr will be dangerous.
+     * So we can try the bssid in wpa_s.
+     */
+    int go_addr_valid = 0;
+    int cc = 0;
+    for (cc = 0; cc < ETH_ALEN; cc++) {
+        if (go_dev_addr[cc] != 0) {
+            go_addr_valid = 1;
+            break;
+        }
+    }
+    if (!go_addr_valid) {
+        wpa_msg_global(wpa_s->parent, MSG_ERROR, "persistent group addr not valid, will try bssid:" MACSTR,
+                         MAC2STR(wpa_s->bssid));
+        os_memcpy(go_dev_addr, wpa_s->bssid, ETH_ALEN);
+    }
+    os_memcpy(wpa_s->go_dev_addr, go_dev_addr, ETH_ALEN);
 
 	if (wpa_s->global->p2p_group_formation == wpa_s)
 		wpa_s->global->p2p_group_formation = NULL;
