@@ -31,9 +31,6 @@ L_CFLAGS += -Wno-unused-parameter
 ifeq ($(BOARD_WLAN_DEVICE),$(filter $(BOARD_WLAN_DEVICE), qcwcn UNITE))
 L_CFLAGS += -DANDROID_P2P
 endif
-ifeq ($(BOARD_WPA_SUPPLICANT_PRIVATE_LIB),)
-L_CFLAGS += -DANDROID_P2P_STUB
-endif
 
 # Disable roaming in wpa_supplicant
 ifdef CONFIG_NO_ROAMING
