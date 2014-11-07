@@ -30,6 +30,7 @@ L_CFLAGS += -Wno-unused-parameter
 # Set Android extended P2P functionality
 ifeq ($(BOARD_WLAN_DEVICE),$(filter $(BOARD_WLAN_DEVICE), qcwcn UNITE))
 L_CFLAGS += -DANDROID_P2P
+endif
 ifeq ($(BOARD_WPA_SUPPLICANT_PRIVATE_LIB),)
 L_CFLAGS += -DANDROID_P2P_STUB
 endif
