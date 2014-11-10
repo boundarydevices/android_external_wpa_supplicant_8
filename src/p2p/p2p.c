@@ -93,12 +93,6 @@ static void p2p_expire_peers(struct p2p_data *p2p)
 			continue;
 		}
 
-#ifdef ANDROID_P2P
-		/* If Connection is in progress, don't expire the peer
-		*/
-		if (p2p_connection_in_progress(p2p))
-			continue;
-#endif
 #ifdef REALTEK_WIFI_VENDOR
                if (dev->req_config_methods != 0)
                        continue;
