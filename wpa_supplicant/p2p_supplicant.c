@@ -2,6 +2,7 @@
  * wpa_supplicant - P2P
  * Copyright (c) 2009-2010, Atheros Communications
  * Copyright (c) 2010-2014, Jouni Malinen <j@w1.fi>
+ * Copyright (C) 2015 Freescale Semiconductor, Inc.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.
@@ -636,13 +637,10 @@ static int wpas_p2p_persistent_group(struct wpa_supplicant *wpa_s,
 		wpa_hexdump(MSG_DEBUG, "P2P: Beacon IEs",
 			    ((u8 *) bss + 1) + bss->ie_len,
 			    bss->beacon_ie_len);
-#ifdef REALTEK_WIFI_VENDOR
-               wpa_printf(MSG_INFO, "Aries IOT patch : forcing be persistent and bssid " MACSTR " as go_dev_addr!! \n\n", MAC2STR(bssid));
-               memcpy(go_dev_addr, bssid, ETH_ALEN);
-               return 1;
-#else
-               return 0;
-#endif
+
+		wpa_printf(MSG_INFO, "Aries IOT patch : forcing be persistent and bssid " MACSTR " as go_dev_addr!! \n\n", MAC2STR(bssid));
+		memcpy(go_dev_addr, bssid, ETH_ALEN);
+		return 1;
 	}
 
 	group_capab = p2p_get_group_capab(p2p);
@@ -6248,22 +6246,6 @@ static void wpas_p2p_set_group_idle_timeout(struct wpa_supplicant *wpa_s)
 			return;
 	}
 
-#ifdef REALTEK_WIFI_VENDOR
-
-    timeout = P2P_MAX_CLIENT_IDLE;
-
-    if (wpa_s->current_ssid->mode == WPAS_MODE_INFRA) {
-        if (wpa_s->show_group_started) {
-             wpa_printf(MSG_INFO, "P2P: set P2P group idle timeout to 20s "
-                       "while waiting for initial 4-way handshake to "
-                       "complete");
-             timeout = P2P_MAX_CLIENT_IDLE;
-         } else {
-             timeout = 0;
-         }
-    }
-
-#else //REALTEK_WIFI_VENDOR
 	if (wpa_s->p2p_in_provisioning) {
 		/*
 		 * Use the normal group formation timeout during the
@@ -6274,20 +6256,25 @@ static void wpas_p2p_set_group_idle_timeout(struct wpa_supplicant *wpa_s)
 			   "during provisioning");
 		return;
 	}
-#endif
 
-	if (wpa_s->show_group_started) {
-		/*
-		 * Use the normal group formation timeout between the end of
-		 * the provisioning phase and completion of 4-way handshake to
-		 * avoid terminating this process too early due to group idle
-		 * timeout.
-		 */
-		wpa_printf(MSG_DEBUG, "P2P: Do not use P2P group idle timeout "
+
+	timeout = P2P_MAX_CLIENT_IDLE;
+
+	if (wpa_s->current_ssid->mode == WPAS_MODE_INFRA)
+	{
+		if (wpa_s->show_group_started) {
+
+			wpa_printf(MSG_INFO, "P2P: set P2P group idle timeout to 20s "
 			   "while waiting for initial 4-way handshake to "
 			   "complete");
-		return;
+			timeout = P2P_MAX_CLIENT_IDLE;
+		}
+		else
+		{
+			timeout = 0;
+		}
 	}
+
 
 	wpa_printf(MSG_DEBUG, "P2P: Set P2P group idle timeout to %u seconds",
 		   timeout);
@@ -7391,7 +7378,8 @@ static struct wpabuf * wpas_p2p_nfc_handover(int ndef, struct wpabuf *wsc,
 static int wpas_p2p_cli_freq(struct wpa_supplicant *wpa_s,
 			     struct wpa_ssid **ssid, u8 *go_dev_addr)
 {
-	struct wpa_supplicant *iface;
+	struct wpa_supplicant *iface = NULL;
+
 
 	if (go_dev_addr)
 		os_memset(go_dev_addr, 0, ETH_ALEN);
