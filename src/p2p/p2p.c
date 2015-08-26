@@ -93,7 +93,7 @@ static void p2p_expire_peers(struct p2p_data *p2p)
 			continue;
 		}
 
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
                if (dev->req_config_methods != 0)
                        continue;
 #endif

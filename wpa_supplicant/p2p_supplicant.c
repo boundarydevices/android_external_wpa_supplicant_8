@@ -3157,7 +3157,7 @@ static void wpas_invitation_received(void *ctx, const u8 *sa, const u8 *bssid,
 		wpa_printf(MSG_DEBUG, "P2P: Invitation from peer " MACSTR
 			   " was accepted; op_freq=%d MHz, SSID=%s",
 			   MAC2STR(sa), op_freq, wpa_ssid_txt(ssid, ssid_len));
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
             // clear previous wpa_s->go_params because it is out of data.
              if (wpa_s->go_params) {
                         wpa_printf(MSG_INFO, "%s() free go_params \n", __func__);

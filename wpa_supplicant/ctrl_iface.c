@@ -4823,7 +4823,7 @@ static int p2p_ctrl_set(struct wpa_supplicant *wpa_s, char *cmd)
 		return p2p_set_listen_channel(wpa_s->global->p2p, 81,
 					      atoi(param), 1);
 	}
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
     if (os_strcmp(cmd, "go_intent") == 0) {
         wpa_s->conf->p2p_go_intent = atoi(param);
         return 0;
@@ -5825,7 +5825,7 @@ static int wpas_ctrl_radio_work_show(struct wpa_supplicant *wpa_s,
 	const int reply_size = 4096;
 	int ctrl_rsp = 0;
 	int reply_len;
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
     if(os_strncmp(buf, "PING", 4) != 0)
         wpa_printf(MSG_INFO, "[CTRL_IFACE]%s: %s", wpa_s->ifname, buf);
 #endif
@@ -7503,7 +7503,7 @@ char * wpa_supplicant_global_ctrl_iface_process(struct wpa_global *global,
 	if (reply)
 		return reply;
 
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
        if(os_strncmp(buf, "PING", 4) != 0)
                wpa_printf(MSG_INFO, "[CTRL_IFACE_G]%s", buf);
 #endif

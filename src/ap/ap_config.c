@@ -873,7 +873,7 @@ void hostapd_set_security_params(struct hostapd_bss_config *bss,
 
 	if ((bss->wpa & 2) && bss->rsn_pairwise == 0)
 		bss->rsn_pairwise = bss->wpa_pairwise;
-#ifndef REALTEK_WIFI_VENDOR
+#ifndef FSL_WIFI_VENDOR
     else if (bss->wpa == 2)
         bss->wpa_pairwise = bss->rsn_pairwise;
 #endif

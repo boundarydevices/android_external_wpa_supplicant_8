@@ -1,6 +1,7 @@
 /*
  * WPA Supplicant
  * Copyright (c) 2003-2014, Jouni Malinen <j@w1.fi>
+ * Copyright (C) 2015 Freescale Semiconductor, Inc.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.
@@ -2129,7 +2130,7 @@ static void wpa_supplicant_enable_one_network(struct wpa_supplicant *wpa_s,
 	 * Try to reassociate since there is no current configuration and a new
 	 * network was made available.
 	 */
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
 	if (!wpa_s->current_ssid)
 #else
     if (!wpa_s->current_ssid && !wpa_s->disconnected)
@@ -2153,7 +2154,7 @@ void wpa_supplicant_enable_network(struct wpa_supplicant *wpa_s,
 			wpa_supplicant_enable_one_network(wpa_s, ssid);
 	} else
 		wpa_supplicant_enable_one_network(wpa_s, ssid);
-#ifdef REALTEK_WIFI_VENDOR
+#ifdef FSL_WIFI_VENDOR
 	if (wpa_s->reassociate) {
 #else
     if (wpa_s->reassociate && !wpa_s->disconnected) {
