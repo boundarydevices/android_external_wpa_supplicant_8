@@ -1550,9 +1550,7 @@ LOCAL_MODULE := bcm_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_WPA_SUPPLICANT_PRIVATE_LIB_QCOM),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_WPA_SUPPLICANT_PRIVATE_LIB_BCM)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_bcmdhd
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog
 ifdef CONFIG_EAP_PROXY
 LOCAL_STATIC_LIBRARIES += $(LIB_STATIC_EAP_PROXY)
@@ -1561,6 +1559,13 @@ endif
 ifeq ($(CONFIG_TLS), openssl)
 LOCAL_SHARED_LIBRARIES += libcrypto libssl libkeystore_binder
 endif
+
+# With BoringSSL we need libkeystore-engine in order to provide access to
+# keystore keys.
+ifneq (,$(wildcard external/boringssl/flavor.mk))
+LOCAL_SHARED_LIBRARIES += libkeystore-engine
+endif
+
 ifdef CONFIG_DRIVER_NL80211
 ifneq ($(wildcard external/libnl),)
 LOCAL_SHARED_LIBRARIES += libnl
@@ -1582,9 +1587,7 @@ LOCAL_MODULE := wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_WPA_SUPPLICANT_PRIVATE_LIB),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_WPA_SUPPLICANT_PRIVATE_LIB)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_qcwcn
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog
 ifdef CONFIG_EAP_PROXY
 LOCAL_STATIC_LIBRARIES += $(LIB_STATIC_EAP_PROXY)
@@ -1619,13 +1622,18 @@ LOCAL_MODULE := rtl_wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_WPA_SUPPLICANT_PRIVATE_LIB_RTL),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_WPA_SUPPLICANT_PRIVATE_LIB_RTL)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_rtl
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog
 ifeq ($(CONFIG_TLS), openssl)
 LOCAL_SHARED_LIBRARIES += libcrypto libssl libkeystore_binder
 endif
+
+# With BoringSSL we need libkeystore-engine in order to provide access to
+# keystore keys.
+ifneq (,$(wildcard external/boringssl/flavor.mk))
+LOCAL_SHARED_LIBRARIES += libkeystore-engine
+endif
+
 ifdef CONFIG_DRIVER_NL80211
 ifneq ($(wildcard external/libnl),)
 LOCAL_SHARED_LIBRARIES += libnl

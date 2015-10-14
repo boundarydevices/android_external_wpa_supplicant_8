@@ -919,9 +919,7 @@ LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB_QCOM),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB_BCM)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_bcmdhd
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
 ifdef CONFIG_DRIVER_NL80211
 ifneq ($(wildcard external/libnl),)
@@ -944,9 +942,7 @@ LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_qcwcn
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
 ifdef CONFIG_DRIVER_NL80211
 ifneq ($(wildcard external/libnl),)
@@ -967,9 +963,7 @@ LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
-ifneq ($(BOARD_HOSTAPD_PRIVATE_LIB_RTL),)
-LOCAL_STATIC_LIBRARIES += $(BOARD_HOSTAPD_PRIVATE_LIB_RTL)
-endif
+LOCAL_STATIC_LIBRARIES += lib_driver_cmd_rtl
 LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
 ifdef CONFIG_DRIVER_NL80211
 ifneq ($(wildcard external/libnl),)
