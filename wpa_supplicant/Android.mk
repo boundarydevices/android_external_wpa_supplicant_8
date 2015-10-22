@@ -1554,6 +1554,9 @@ LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
 
 ########################
+
+ifneq ($(BOARD_SUPPORT_BCM_WIFI),)
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := bcm_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
@@ -1583,6 +1586,8 @@ LOCAL_CFLAGS += -DBROADCOM_WIFI_VENDOR
 LOCAL_SRC_FILES := $(OBJS)
 LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
+
+endif
 
 ########################
 
