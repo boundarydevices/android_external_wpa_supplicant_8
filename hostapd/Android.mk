@@ -937,27 +937,6 @@ include $(BUILD_EXECUTABLE)
 
 ########################
 include $(CLEAR_VARS)
-LOCAL_MODULE := hostapd
-LOCAL_MODULE_TAGS := optional
-ifdef CONFIG_DRIVER_CUSTOM
-LOCAL_STATIC_LIBRARIES := libCustomWifi
-endif
-LOCAL_STATIC_LIBRARIES += lib_driver_cmd_qcwcn
-LOCAL_SHARED_LIBRARIES := libc libcutils liblog libcrypto libssl
-ifdef CONFIG_DRIVER_NL80211
-ifneq ($(wildcard external/libnl),)
-LOCAL_SHARED_LIBRARIES += libnl
-else
-LOCAL_STATIC_LIBRARIES += libnl_2
-endif
-endif
-LOCAL_CFLAGS := $(L_CFLAGS)
-LOCAL_SRC_FILES := $(OBJS)
-LOCAL_C_INCLUDES := $(INCLUDES)
-include $(BUILD_EXECUTABLE)
-
-########################
-include $(CLEAR_VARS)
 LOCAL_MODULE := rtl_hostapd
 LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
