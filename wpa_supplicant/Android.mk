@@ -1558,7 +1558,7 @@ include $(BUILD_EXECUTABLE)
 ifneq ($(BOARD_SUPPORT_BCM_WIFI),)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := bcm_supplicant
+LOCAL_MODULE := wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif

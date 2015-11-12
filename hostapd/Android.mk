@@ -909,7 +909,7 @@ include $(BUILD_EXECUTABLE)
 ifneq ($(BOARD_SUPPORT_BCM_WIFI),)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := bcm_hostapd
+LOCAL_MODULE := hostapd
 LOCAL_MODULE_TAGS := optional
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
