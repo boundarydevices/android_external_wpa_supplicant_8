@@ -1546,7 +1546,7 @@ include $(BUILD_EXECUTABLE)
 
 ########################
 include $(CLEAR_VARS)
-LOCAL_MODULE := bcm_supplicant
+LOCAL_MODULE := wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
 LOCAL_STATIC_LIBRARIES := libCustomWifi
 endif
