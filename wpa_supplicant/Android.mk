@@ -1554,9 +1554,6 @@ LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
 
 ########################
-
-ifneq ($(BOARD_SUPPORT_BCM_WIFI),)
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
@@ -1590,10 +1587,7 @@ LOCAL_SRC_FILES := $(OBJS)
 LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
 
-endif
-
 ########################
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := rtl_wpa_supplicant
 ifdef CONFIG_DRIVER_CUSTOM
