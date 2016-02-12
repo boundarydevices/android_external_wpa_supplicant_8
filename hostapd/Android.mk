@@ -906,8 +906,6 @@ LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
 
 ########################
-ifneq ($(BOARD_SUPPORT_BCM_WIFI),)
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := hostapd
 LOCAL_MODULE_TAGS := optional
@@ -932,10 +930,6 @@ LOCAL_CFLAGS := $(L_CFLAGS)
 LOCAL_SRC_FILES := $(OBJS)
 LOCAL_C_INCLUDES := $(INCLUDES)
 include $(BUILD_EXECUTABLE)
-
-endif
-
-########################
 
 ########################
 include $(CLEAR_VARS)
